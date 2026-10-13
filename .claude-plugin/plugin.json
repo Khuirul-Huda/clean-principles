@@ -1,0 +1,21 @@
+{
+  "name": "clean-principles",
+  "description": "Clean coding principles for Claude Code: SOLID, Clean Code, DRY/KISS/YAGNI, Design Patterns, Architecture, and Testing — language-agnostic.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Huda"
+  },
+  "homepage": "https://github.com/yourusername/clean-principles",
+  "repository": "https://github.com/yourusername/clean-principles",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "clean-code",
+    "solid",
+    "design-patterns",
+    "architecture",
+    "testing",
+    "coding-principles",
+    "best-practices"
+  ]
+}
