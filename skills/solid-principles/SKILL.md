@@ -70,10 +70,20 @@ class Rectangle:
 class Square(Rectangle):
     def set_width(self, w): self.width = self.height = w  # Surprise!
 
-# ✅ GOOD: Don't inherit — use composition or a shared abstraction
+# ✅ GOOD: Don't inherit Rectangle — use a shared abstraction
 class Shape(ABC):
     @abstractmethod
     def area(self) -> float: ...
+
+class Circle(Shape):
+    def area(self) -> float: return π * self.r ** 2  # No surprises
+
+class Square(Shape):
+    def area(self) -> float: return self.side ** 2   # No surprises
+
+# Any caller using Shape works with Circle, Square, or any future Shape
+def print_area(shape: Shape):
+    print(shape.area())  # Substitution holds — no broken contracts
 ```
 
 ## I — Interface Segregation
@@ -109,6 +119,19 @@ class OrderService:
     def __init__(self, db: DatabaseInterface):
         self.db = db  # Testable, swappable
 ```
+
+## When NOT to Apply SOLID
+
+**SOLID adds structure — don't add structure before you need it.**
+
+| Situation | Guidance |
+|-----------|----------|
+| Script or utility < ~200 lines | Skip it — SOLID adds boilerplate without benefit |
+| Only one concrete implementation | Don't apply DIP/OCP yet (YAGNI wins) |
+| Splitting a class makes it *harder* to read | SRP is served, but clarity isn't — reconsider |
+| Prototype / proof of concept | Write it dirty first, refactor when it survives |
+
+**Rule:** Apply SOLID when the codebase grows and pain appears — not from line 1.
 
 ## Common Mistakes
 
