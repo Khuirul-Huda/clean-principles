@@ -67,6 +67,66 @@ Rule: Domain knows NOTHING about Infrastructure.
 
 ---
 
+## CQRS — Command Query Responsibility Segregation
+
+**Separate write operations (Commands) from read operations (Queries).**
+
+```python
+# ❌ BAD: Mixed reads and writes — hard to optimize independently
+class UserService:
+    def create_user(self, data): ...       # command
+    def update_email(self, id, email): ... # command
+    def find_by_id(self, id): ...          # query
+    def search_users(self, query): ...     # query — often needs different optimization
+
+# ✅ GOOD: Separated by intent
+class UserCommandService:
+    def create(self, data: CreateUserDTO) -> None: ...
+    def update_email(self, id: int, email: str) -> None: ...
+
+class UserQueryService:
+    def find_by_id(self, id: int) -> UserView: ...
+    def search(self, query: str) -> list[UserView]: ...
+```
+
+**Benefits:** Read and write models evolve independently. Query side can use caching, denormalized views, or read replicas without affecting write logic.
+
+> **Note:** Full CQRS with separate databases is advanced. Even splitting command/query into separate classes in the same service is a meaningful step.
+
+---
+
+## Event-Driven Architecture
+
+**Modules communicate by publishing events — not by calling each other directly.**
+
+```python
+# ❌ BAD: OrderService knows about every downstream service
+class OrderService:
+    def place_order(self, order):
+        self.db.save(order)
+        self.email_service.send_confirmation(order)  # tight coupling
+        self.inventory_service.reserve(order.items)
+        self.billing_service.charge(order)
+
+# ✅ GOOD: OrderService publishes one event — knows nothing downstream
+class OrderService:
+    def place_order(self, order):
+        self.db.save(order)
+        self.event_bus.publish("order.placed", order)  # zero coupling
+
+# Each service subscribes independently:
+email_service.on("order.placed", send_confirmation)
+inventory_service.on("order.placed", reserve_items)
+billing_service.on("order.placed", charge_customer)
+# Adding analytics? Zero changes to OrderService.
+```
+
+**Benefit:** Adding a new reaction requires zero changes to the publisher.
+
+**Trade-off:** Flow is harder to trace — invest in structured logging and observability.
+
+---
+
 ## High Cohesion, Low Coupling
 
 | Concept | Goal | Smell |
@@ -123,3 +183,5 @@ total = order.get_customer_balance()  # Customer encapsulates wallet
 - [ ] Can I test business logic without a database or HTTP server?
 - [ ] Does changing a database table require changes outside the repository?
 - [ ] Are module boundaries obvious from the folder structure?
+- [ ] Are commands (writes) separated from queries (reads)?
+- [ ] Do modules communicate through events rather than direct calls where decoupling matters?
