@@ -74,6 +74,33 @@ def test_order_applies_discount_for_premium_users():
 
 ---
 
+## Test Naming Convention
+
+**A test name should describe: what is tested, under what condition, and the expected outcome.**
+
+| ❌ Bad name | ✅ Good name |
+|------------|-------------|
+| `test1` | `test_order_total_includes_tax_for_premium_users` |
+| `testDiscount` | `test_discount_not_applied_when_cart_is_empty` |
+| `test_user()` | `test_user_registration_fails_when_email_already_exists` |
+| `handleError` | `test_payment_raises_exception_when_card_is_declined` |
+
+**Two popular patterns:**
+```python
+# Pattern 1: test_<unit>_<scenario>_<expected> (Python / snake_case)
+def test_order_total_returns_zero_when_cart_is_empty(): ...
+def test_user_login_raises_error_when_password_is_wrong(): ...
+```
+```typescript
+// Pattern 2: BDD style — works great with it() in Jest/Vitest
+it('should apply 10% discount when user tier is premium')
+it('should reject checkout when cart has no items')
+```
+
+**Rule:** If you need to read the test body to understand what it tests, the name is wrong.
+
+---
+
 ## Test Doubles
 
 | Double | Use when |
@@ -126,6 +153,31 @@ email_service.send_confirmation.assert_called_once_with(order)
 
 ---
 
+## Code Coverage
+
+**Coverage is a useful signal, not a goal. 100% coverage ≠ 100% correct.**
+
+| Guideline | Detail |
+|-----------|--------|
+| Reasonable baseline | 80% line coverage for most projects |
+| Prioritize for | Business logic, error paths, edge cases |
+| Don't chase for | Framework glue, trivial getters, generated code |
+
+**What coverage cannot catch:**
+```python
+# 100% coverage — but test asserts the wrong thing
+def test_discount():
+    order = Order(items=[Item(price=100)], user=premium_user)
+    total = order.calculate_total()
+    assert total == 100  # ❌ Should be 90 — bug undetected, coverage reports 100%
+```
+- A test that runs code but asserts nothing gives 100% coverage and zero confidence
+- Missing test cases (untested scenarios) are invisible to coverage reports
+
+**Rule:** Use coverage to find *untested code* — not to prove correctness.
+
+---
+
 ## Quick Self-Check
 
 - [ ] Does each test have one clear reason to fail?
@@ -133,3 +185,5 @@ email_service.send_confirmation.assert_called_once_with(order)
 - [ ] Do tests verify behavior, not implementation?
 - [ ] Can you understand what each test proves from its name alone?
 - [ ] Are slow tests isolated from fast tests?
+- [ ] Does each test name describe the scenario and expected outcome without reading the body?
+- [ ] Is coverage tracking business logic rather than chasing a 100% number?
