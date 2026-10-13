@@ -26,6 +26,21 @@ Loaded when relevant — deep-dive reference for each topic:
 
 ---
 
+## ⚖️ Comparison: With vs. Without `clean-principles`
+
+How AI agent output changes when `clean-principles` is active:
+
+| Dimension | ❌ Without Plugin (Default AI Behavior) | ✅ With `clean-principles` |
+|---|---|---|
+| **Class Architecture** | Superficial cleanup. Leaves "God Classes" with mixed responsibilities (DB queries, email, domain logic all in one place). | Enforces **SRP** & **DIP**. Separates domain models, pure calculators, and infrastructure behind interfaces (`Protocol`). |
+| **API Design** | Keeps boolean flag arguments (`process(True)`). Cryptic parameter abbreviations (`u_id`, `d`, `flag`). | Eliminates flag arguments with intention-revealing methods (`processStandard()`, `processPromotional()`). |
+| **Ambiguous Requests** | **Silent scope expansion & hedging**: Outputs 1,400+ tokens of speculative hybrid code with warnings. High rework rate (~80%). | **Clarify before build**: Detects ambiguous triggers (*"simple"*, *"production-ready"*), asks 1 spectrum question (~120 tokens), preventing rework. |
+| **Error Handling** | Swallows errors (`except: return None`) or returns mixed types (string error messages, `None`, dicts). | Specific custom exceptions, fails fast, no `None` returns for collections, consistent typed domain entities. |
+| **Over-Engineering** | Over-abstracts prematurely (creates factories, generic interfaces, and design patterns for 20-line scripts). | Pragmatic guardrails: explicit *"When NOT to apply"* rules (e.g. YAGNI > OCP for single implementations; scripts < 200 lines skip boilerplate). |
+| **Testability** | Tight coupling to external services (SMTP, database sockets). Hard to test without heavy mocking or live servers. | Inverted dependencies allow **100% in-memory unit testing** in milliseconds. |
+
+---
+
 ## Installation
 
 ### 📦 Via npm (recommended — works everywhere)
