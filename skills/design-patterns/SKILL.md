@@ -49,6 +49,18 @@ class Config:
             cls._instance = super().__new__(cls)
         return cls._instance
 ```
+⚠️ The naive implementation above is NOT thread-safe. Use a lock in multi-threaded environments:
+```python
+import threading
+class Config:
+    _instance = None
+    _lock = threading.Lock()
+    def __new__(cls):
+        with cls._lock:
+            if not cls._instance:
+                cls._instance = super().__new__(cls)
+        return cls._instance
+```
 ⚠️ Avoid for anything testable — singletons make tests order-dependent.
 
 ---
@@ -98,6 +110,33 @@ class SQLUserRepository(UserRepository):
         return User.from_row(row)
 ```
 
+### Facade
+**Problem:** Callers must coordinate a complex subsystem — simplify behind one interface.
+```python
+class PaymentFacade:
+    def charge(self, amount: float, card: Card) -> Receipt:
+        self.fraud_detector.check(card)       # complex internals
+        receipt = self.stripe.charge(amount, card)
+        self.audit_logger.log(receipt)
+        return receipt
+# Caller only knows: facade.charge(amount, card)
+```
+
+### Proxy
+**Problem:** Control access to an object — add caching, auth, or lazy loading transparently.
+```python
+class CachedUserRepository:
+    def __init__(self, repo: UserRepository, cache: Cache):
+        self._repo, self._cache = repo, cache
+
+    def find_by_id(self, id: int) -> User:
+        if user := self._cache.get(f"user:{id}"):
+            return user
+        user = self._repo.find_by_id(id)
+        self._cache.set(f"user:{id}", user)
+        return user
+```
+
 ---
 
 ## Behavioral — How Objects Communicate
@@ -141,6 +180,25 @@ class MoveCommand(Command):
     def undo(self): self.piece.move(self.origin)
 ```
 
+### Template Method
+**Problem:** An algorithm's structure is fixed, but specific steps vary per subclass.
+```python
+class ReportGenerator(ABC):
+    def generate(self) -> str:       # fixed skeleton — not overridable
+        data = self.fetch_data()
+        return self.format(data)
+
+    @abstractmethod
+    def fetch_data(self) -> list: ...
+
+    @abstractmethod
+    def format(self, data: list) -> str: ...
+
+class CSVReport(ReportGenerator):
+    def fetch_data(self): return db.query("SELECT ...")
+    def format(self, data): return ",".join(str(r) for r in data)
+```
+
 ---
 
 ## Pattern Selection Guide
@@ -154,7 +212,22 @@ class MoveCommand(Command):
 | Decouple data access | Repository |
 | Notify many listeners | Observer |
 | Swap algorithms | Strategy |
+| Provide simple interface to complex subsystem | Facade |
+| Control/cache access to an object | Proxy |
+| Fixed algorithm with varying steps | Template Method |
 | Undo/queue operations | Command |
+
+## When to Refactor TO a Pattern
+
+| Signal in your code | Introduce |
+|---------------------|-----------|
+| if/elif grows every time you add a new type | Factory Method |
+| Constructor keeps gaining optional parameters | Builder |
+| Need to add logging/caching/auth to many classes | Decorator or Proxy |
+| Multiple services react to the same event | Observer |
+| Same algorithm, varying steps per subclass | Strategy or Template Method |
+| Caller must coordinate many subsystem calls | Facade |
+| Operations need undo or async queuing | Command |
 
 ## Anti-Pattern Warning
 
