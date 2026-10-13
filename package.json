@@ -1,0 +1,40 @@
+{
+  "name": "clean-principles",
+  "version": "1.0.0",
+  "description": "Clean coding principles for AI agents: SOLID, Clean Code, DRY/KISS/YAGNI, Design Patterns, Architecture, and Testing — language-agnostic, works with any AI coding agent.",
+  "type": "module",
+  "keywords": [
+    "skills",
+    "clean-code",
+    "solid",
+    "design-patterns",
+    "architecture",
+    "testing",
+    "coding-principles",
+    "best-practices",
+    "agentskills"
+  ],
+  "author": {
+    "name": "Huda"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/yourusername/clean-principles",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/clean-principles.git"
+  },
+  "files": [
+    "skills/",
+    "rules/",
+    "plugin.json",
+    "README.md"
+  ],
+  "agentskills": {
+    "skills": "./skills"
+  },
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  }
+}
