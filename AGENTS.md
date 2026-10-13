@@ -12,11 +12,12 @@ The following skills are available on-demand:
 - **design-patterns** — Factory, Observer, Strategy, Repository, and more
 - **architecture-principles** — SoC, layered arch, hexagonal, cohesion/coupling
 - **testing-principles** — TDD, FIRST, AAA, test doubles, testing pyramid
+- **clarify-before-build** — Disambiguate scope before building ("simple", "quick", "production-ready")
 
 ## Always-On Rules
 
 ### Naming
-- Use intention-revealing names (`elapsedDays` not `d`)
+- Use intention-revealing names (`elapsedDays` not `d`, `isUserActive` not `flag`)
 - Functions = verb phrases (`calculateTotal`, `sendEmail`)
 - Classes = noun phrases (`UserAccount`, `OrderProcessor`)
 - No cryptic abbreviations
@@ -31,6 +32,7 @@ The following skills are available on-demand:
 - No magic numbers — use named constants
 - No commented-out code — delete it
 - Comments explain WHY, not WHAT
+- No `null`/`None` returns from functions that return collections — return empty collection
 - Catch specific exceptions only
 
 ### Design
@@ -38,3 +40,10 @@ The following skills are available on-demand:
 - **YAGNI**: Don't build features nobody asked for yet
 - **KISS**: Simple over clever
 - **SRP**: One reason to change per module
+
+## Before Every Commit
+
+Ask yourself:
+1. Can I explain what each function does in one sentence?
+2. Would a new team member understand this without asking me?
+3. Is there any dead code, commented code, or `TODO` older than this PR?

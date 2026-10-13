@@ -1,3 +1,13 @@
 {
-  "name": "clean-principles"
+  "name": "clean-principles",
+  "version": "1.0.0",
+  "description": "Clean coding principles for AI agents: SOLID, Clean Code, DRY/KISS/YAGNI, Design Patterns, Architecture, Testing, and Clarify Before Build.",
+  "author": {
+    "name": "Khuirul Huda",
+    "email": "hudah2102@gmail.com"
+  },
+  "homepage": "https://github.com/Khuirul-Huda/clean-principles",
+  "repository": "https://github.com/Khuirul-Huda/clean-principles.git",
+  "license": "MIT",
+  "skills": "./skills"
 }

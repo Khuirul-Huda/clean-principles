@@ -1,6 +1,6 @@
 # clean-principles
 
-> Clean coding principles for AI agents — SOLID, Clean Code, DRY/KISS/YAGNI, Design Patterns, Architecture, Testing.
+> Clean coding principles for AI agents — SOLID, Clean Code, DRY/KISS/YAGNI, Design Patterns, Architecture, Testing, Clarify Before Build.
 > Language-agnostic. Works with Antigravity (AGY), Claude Code, Cursor, Codex, and any agent supporting [agentskills.io](https://agentskills.io).
 
 ## What's Included
@@ -22,6 +22,7 @@ Loaded when relevant — deep-dive reference for each topic:
 | `design-patterns` | Recurring structural/behavioral problems |
 | `architecture-principles` | System structure, module boundaries, layer design |
 | `testing-principles` | Writing/reviewing tests, brittle/slow tests |
+| `clarify-before-build` | Ambiguous scope words ("production-ready", "simple", "quick", "clean") |
 
 ---
 
@@ -144,11 +145,14 @@ clean-principles/
 ├── package.json                    # npm package config
 ├── CLAUDE.md                       # Auto-loaded by Claude Code
 ├── AGENTS.md                       # Auto-loaded by Codex & generic agents
+├── LICENSE                         # MIT License
 ├── README.md
 ├── .claude-plugin/
 │   └── plugin.json                 # Claude plugin marketplace manifest
 ├── .cursor-plugin/
 │   └── plugin.json                 # Cursor plugin manifest
+├── .codex-plugin/
+│   └── plugin.json                 # OpenAI Codex plugin manifest
 ├── rules/
 │   └── core-principles.md          # Always-on rules (AGY)
 └── skills/
@@ -157,7 +161,8 @@ clean-principles/
     ├── dry-kiss-yagni/SKILL.md
     ├── design-patterns/SKILL.md
     ├── architecture-principles/SKILL.md
-    └── testing-principles/SKILL.md
+    ├── testing-principles/SKILL.md
+    └── clarify-before-build/SKILL.md
 ```
 
 ---

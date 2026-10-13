@@ -1,13 +1,15 @@
 {
   "name": "clean-principles",
-  "description": "Clean coding principles for Claude Code: SOLID, Clean Code, DRY/KISS/YAGNI, Design Patterns, Architecture, and Testing — language-agnostic.",
+  "description": "Clean coding principles for Claude Code: SOLID, Clean Code, DRY/KISS/YAGNI, Design Patterns, Architecture, Testing, and Clarify Before Build — language-agnostic.",
   "version": "1.0.0",
   "author": {
-    "name": "Huda"
+    "name": "Khuirul Huda",
+    "email": "hudah2102@gmail.com"
   },
   "homepage": "https://github.com/Khuirul-Huda/clean-principles",
   "repository": "https://github.com/Khuirul-Huda/clean-principles",
   "license": "MIT",
+  "skills": "./skills",
   "keywords": [
     "skills",
     "clean-code",
@@ -15,6 +17,7 @@
     "design-patterns",
     "architecture",
     "testing",
+    "clarify-before-build",
     "coding-principles",
     "best-practices"
   ]

@@ -12,6 +12,7 @@ The following skills are available on-demand. Ask me to use them when relevant:
 - **design-patterns** — Factory, Observer, Strategy, Repository, and more
 - **architecture-principles** — SoC, layered arch, hexagonal, cohesion/coupling
 - **testing-principles** — TDD, FIRST, AAA, test doubles, testing pyramid
+- **clarify-before-build** — Disambiguate scope before building ("simple", "quick", "production-ready")
 
 ## Always-On Rules
 
@@ -31,6 +32,7 @@ The following skills are available on-demand. Ask me to use them when relevant:
 - No magic numbers — extract to named constants
 - No commented-out code — delete it, git has history
 - Comments explain WHY, not WHAT
+- No `null`/`None` returns from functions that return collections — return empty collection
 - Catch specific exceptions — never bare `except:` or `catch (Exception e)`
 
 ### Design
@@ -38,3 +40,10 @@ The following skills are available on-demand. Ask me to use them when relevant:
 - **YAGNI**: Don't build features nobody asked for yet
 - **KISS**: Prefer simple over clever
 - **SRP**: Each class/module has one reason to change
+
+## Before Every Commit
+
+Ask yourself:
+1. Can I explain what each function does in one sentence?
+2. Would a new team member understand this without asking me?
+3. Is there any dead code, commented code, or `TODO` older than this PR?
