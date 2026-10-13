@@ -71,7 +71,7 @@ cp -r clean-principles your-project/.agents/plugins/clean-principles
 
 ```bash
 # Clone into your project
-git clone https://github.com/yourusername/clean-principles .claude/plugins/clean-principles
+git clone https://github.com/Khuirul-Huda/clean-principles .claude/plugins/clean-principles
 ```
 
 Or install via npm and reference in `.claude/settings.json`:
