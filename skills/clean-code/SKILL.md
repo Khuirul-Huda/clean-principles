@@ -53,6 +53,49 @@ def calculate_total(order) -> float:
 - No flag arguments (`process(true)` → two functions)
 - Command/Query separation: either *do* something or *return* something, not both
 
+## Classes
+
+**Small classes with high cohesion — methods should use most instance variables.**
+
+```python
+# ❌ BAD: One class, two unrelated concerns — methods only use half the variables
+class UserService:
+    def __init__(self):
+        self.name = ""
+        self.email = ""        # Group 1: user identity
+        self.token = ""
+        self.expires_at = None # Group 2: session auth — unrelated
+        self.refresh_token = ""
+
+    def get_display_name(self): return self.name  # uses only Group 1
+    def validate_email(self): ...                 # uses only Group 1
+    def refresh_session(self): ...                # uses only Group 2
+    def is_session_expired(self): ...             # uses only Group 2
+
+# ✅ GOOD: Split into two cohesive classes
+class User:
+    def __init__(self, name: str, email: str):
+        self.name = name
+        self.email = email
+
+    def get_display_name(self) -> str: return self.name
+    def validate_email(self) -> bool: ...
+
+class UserSession:
+    def __init__(self, token: str, expires_at: datetime):
+        self.token = token
+        self.expires_at = expires_at
+        self.refresh_token = ""
+
+    def is_expired(self) -> bool: ...
+    def refresh(self) -> None: ...
+```
+
+**Class rules:**
+- If a method only uses half the instance variables, the class likely has two responsibilities
+- Cohesion check: can every method be described using the class name alone?
+- Prefer many small, focused classes over one large class
+
 ## Comments
 
 **Comments explain WHY, not WHAT. Good code is self-documenting.**
@@ -78,7 +121,19 @@ MAX_PAYMENT_RETRIES = 3
 
 **Code is read more than written — optimize for the reader.**
 
-- **Vertical distance:** Related things stay close. Caller above callee.
+- **Vertical distance:** Related things stay close. Follow the **Stepdown Rule** — callers above callees, read top-to-bottom like a newspaper: high-level summary first, implementation details below.
+
+  ```python
+  # ✅ GOOD: High-level entry point at top, details flow downward
+  def process_checkout(cart):
+      validate_cart(cart)
+      total = calculate_total(cart)
+      return charge_payment(total)
+
+  def validate_cart(cart): ...    # detail — below its caller
+  def calculate_total(cart): ...  # detail — below its caller
+  def charge_payment(total): ...  # detail — below its caller
+  ```
 - **Horizontal:** Keep lines short (≤ 120 chars). Don't align assignments — it's visual noise.
 - **One concept per line.** No `a = b = c = 0`.
 - **Blank lines** = paragraph breaks = logical separation.
