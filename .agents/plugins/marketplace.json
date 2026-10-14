@@ -1,0 +1,21 @@
+{
+  "name": "clean-principles",
+  "interface": {
+    "displayName": "Clean Principles"
+  },
+  "plugins": [
+    {
+      "name": "clean-principles",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/Khuirul-Huda/clean-principles.git",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Development"
+    }
+  ]
+}

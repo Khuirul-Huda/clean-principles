@@ -1,127 +1,25 @@
 # clean-principles
 
 > Clean coding principles for AI agents — SOLID, Clean Code, DRY/KISS/YAGNI, Design Patterns, Architecture, Testing, Clarify Before Build.
-> Language-agnostic. Works with Antigravity (AGY), Claude Code, Cursor, Codex, and any agent supporting [agentskills.io](https://agentskills.io).
-
-## What's Included
-
-### Always-On Rules
-Automatically applied in every coding session:
-
-- **`rules/core-principles.md`** — Naming conventions, function rules, design principles baseline
-- **`CLAUDE.md`** / **`AGENTS.md`** — Picked up automatically by Claude Code and other agents
-
-### On-Demand Skills
-Loaded when relevant — deep-dive reference for each topic:
-
-| Skill | Trigger |
-|-------|---------|
-| `solid-principles` | Designing classes/modules, extensibility problems |
-| `clean-code` | Naming, functions, comments, readability |
-| `dry-kiss-yagni` | Seeing duplication, over-engineering, premature abstraction |
-| `design-patterns` | Recurring structural/behavioral problems |
-| `architecture-principles` | System structure, module boundaries, layer design |
-| `testing-principles` | Writing/reviewing tests, brittle/slow tests |
-| `clarify-before-build` | Ambiguous scope words ("production-ready", "simple", "quick", "clean") |
+> Language-agnostic. Works with Antigravity (AGY), Claude Code, Codex, GitHub Copilot, Cursor, and any agent supporting [agentskills.io](https://agentskills.io).
 
 ---
 
-## ⚖️ Comparison: With vs. Without `clean-principles`
+## ⚡ Quick Install
 
-How AI agent output changes when `clean-principles` is active:
+### Via Marketplace (Recommended)
 
-| Dimension | ❌ Without Plugin (Default AI Behavior) | ✅ With `clean-principles` |
-|---|---|---|
-| **Class Architecture** | Superficial cleanup. Leaves "God Classes" with mixed responsibilities (DB queries, email, domain logic all in one place). | Enforces **SRP** & **DIP**. Separates domain models, pure calculators, and infrastructure behind interfaces (`Protocol`). |
-| **API Design** | Keeps boolean flag arguments (`process(True)`). Cryptic parameter abbreviations (`u_id`, `d`, `flag`). | Eliminates flag arguments with intention-revealing methods (`processStandard()`, `processPromotional()`). |
-| **Ambiguous Requests** | **Silent scope expansion & hedging**: Outputs 1,400+ tokens of speculative hybrid code with warnings. High rework rate (~80%). | **Clarify before build**: Detects ambiguous triggers (*"simple"*, *"production-ready"*), asks 1 spectrum question (~120 tokens), preventing rework. |
-| **Error Handling** | Swallows errors (`except: return None`) or returns mixed types (string error messages, `None`, dicts). | Specific custom exceptions, fails fast, no `None` returns for collections, consistent typed domain entities. |
-| **Over-Engineering** | Over-abstracts prematurely (creates factories, generic interfaces, and design patterns for 20-line scripts). | Pragmatic guardrails: explicit *"When NOT to apply"* rules (e.g. YAGNI > OCP for single implementations; scripts < 200 lines skip boilerplate). |
-| **Testability** | Tight coupling to external services (SMTP, database sockets). Hard to test without heavy mocking or live servers. | Inverted dependencies allow **100% in-memory unit testing** in milliseconds. |
+| Agent | Command |
+|---|---|
+| **Claude Code** | `/plugin marketplace add Khuirul-Huda/clean-principles`<br>`/plugin install clean-principles@clean-principles` |
+| **Antigravity (AGY)** | `agy plugin install https://github.com/Khuirul-Huda/clean-principles` |
+| **OpenAI Codex** | `codex plugin marketplace add Khuirul-Huda/clean-principles`<br>`codex plugin add clean-principles@clean-principles` |
+| **GitHub Copilot CLI** | `copilot plugin marketplace add Khuirul-Huda/clean-principles`<br>`copilot plugin install clean-principles@clean-principles` |
+| **npm / agentskills** | `npx agentskills export clean-principles` |
 
----
+### Generic / Project Install
 
-## Installation
-
-### 📦 Via npm (recommended — works everywhere)
-
-```bash
-npm install clean-principles
-```
-
-Then export skills into your agent config:
-
-```bash
-# Using npx agentskills (agentskills.io standard)
-npx agentskills export clean-principles
-
-# Using skillpm
-npx skillpm install clean-principles
-
-# Manual copy from node_modules
-cp -r node_modules/clean-principles/skills ~/.agents/skills/
-```
-
----
-
-### 🤖 Antigravity / AGY
-
-**Global (all projects):**
-```bash
-cp -r clean-principles ~/.gemini/config/plugins/clean-principles
-```
-
-Add to `~/.gemini/config/plugins.json`:
-```json
-{ "plugins": ["~/.gemini/config/plugins/clean-principles"] }
-```
-
-**Per-project (share with team via git):**
-```bash
-cp -r clean-principles your-project/.agents/plugins/clean-principles
-```
-
----
-
-### 🟣 Claude Code
-
-```bash
-# Clone into your project
-git clone https://github.com/Khuirul-Huda/clean-principles .claude/plugins/clean-principles
-```
-
-Or install via npm and reference in `.claude/settings.json`:
-```json
-{
-  "plugins": ["./node_modules/clean-principles"]
-}
-```
-
-`CLAUDE.md` is automatically picked up by Claude Code when present in the plugin folder.
-
----
-
-### 🔲 Cursor
-
-```bash
-cp -r clean-principles ~/.cursor/plugins/clean-principles
-```
-
-Or reference in your project's `.cursorrules` by copying the content of `AGENTS.md`.
-
----
-
-### 📖 Codex / OpenAI Codex
-
-```bash
-cp -r clean-principles ~/.codex/plugins/clean-principles
-```
-
----
-
-### 🌐 Any agent that reads `AGENTS.md`
-
-Copy `AGENTS.md` to your project root — it contains the always-on rules in a format readable by any agent.
+For any agent that reads `AGENTS.md` (Cursor, Windsurf, Aider, etc.), copy `AGENTS.md` directly into your project root:
 
 ```bash
 cp clean-principles/AGENTS.md your-project/AGENTS.md
@@ -129,70 +27,64 @@ cp clean-principles/AGENTS.md your-project/AGENTS.md
 
 ---
 
-### 📋 Manual / Minimal install
+## 📦 What's Included
 
-Copy just the skills you need:
-```bash
-# All skills
-cp -r clean-principles/skills/* ~/.agents/skills/
+### Always-On Rules
+Loaded automatically every session:
+- **`rules/core-principles.md`** — Naming, function limits, error handling, clean defaults.
+- **`AGENTS.md`** / **`CLAUDE.md`** — Standard project rules picked up across all major agents.
 
-# Or just specific ones
-cp -r clean-principles/skills/solid-principles ~/.agents/skills/
-cp -r clean-principles/skills/clean-code ~/.agents/skills/
-```
+### On-Demand Skills
+Loaded dynamically when relevant to the task:
+
+| Skill | Trigger / When to Apply |
+|---|---|
+| `solid-principles` | Designing classes/modules, interfaces, coupling issues |
+| `clean-code` | Naming, small functions, comments, readability |
+| `dry-kiss-yagni` | Seeing duplication, over-engineering, premature abstraction |
+| `design-patterns` | Structural/behavioral problems (Factory, Strategy, Observer, Repository) |
+| `architecture-principles` | System boundaries, layered & hexagonal architecture, high cohesion |
+| `testing-principles` | Unit test design, FIRST, AAA pattern, test doubles |
+| `clarify-before-build` | Ambiguous requirements ("production-ready", "simple", "quick", "clean") |
 
 ---
 
-## Philosophy
+## ⚖️ Comparison: With vs. Without `clean-principles`
 
-- **Compact, not verbose** — every skill is scannable in 30 seconds
-- **Language-agnostic** — principles apply regardless of Python, TypeScript, Go, etc.
-- **Good vs Bad examples** — every principle shows what to avoid and what to do instead
-- **When principles conflict** — explicit guidance on which wins and when
+| Dimension | ❌ Without Plugin (Default AI Behavior) | ✅ With `clean-principles` |
+|---|---|---|
+| **Class Architecture** | God classes mixing DB queries, external APIs, and business logic. | Strict **SRP** & **DIP**. Separates domain models, pure calculators, and infrastructure. |
+| **API Design** | Boolean flags (`process(True)`), cryptic parameter names (`u_id`, `flag`). | Eliminates flags via intention-revealing methods (`processStandard()`, `processPromotional()`). |
+| **Ambiguous Requests** | Speculative code expansion; outputs 1,400+ tokens of hybrid guesswork. | **Clarify before build**: Asks 1 spectrum question (~120 tokens), preventing rework. |
+| **Error Handling** | Swallows errors (`except: return None`) or returns mixed types. | Specific custom exceptions, fails fast, empty collections instead of `null`/`None`. |
+| **Over-Engineering** | Generates premature abstractions and factories for 20-line scripts. | Pragmatic guardrails: explicit *"When NOT to apply"* rules (KISS > patterns for small scripts). |
+| **Testability** | Tight coupling to external services; hard to test without mocks. | Inverted dependencies allow fast, in-memory unit testing. |
 
 ---
 
-## Structure
+## 📂 Repository Structure
 
-```
+```text
 clean-principles/
-├── plugin.json                     # Antigravity/AGY plugin config
-├── package.json                    # npm package config
-├── CLAUDE.md                       # Auto-loaded by Claude Code
-├── AGENTS.md                       # Auto-loaded by Codex & generic agents
-├── LICENSE                         # MIT License
-├── README.md
-├── .claude-plugin/
-│   └── plugin.json                 # Claude plugin marketplace manifest
-├── .cursor-plugin/
-│   └── plugin.json                 # Cursor plugin manifest
-├── .codex-plugin/
-│   └── plugin.json                 # OpenAI Codex plugin manifest
-├── rules/
-│   └── core-principles.md          # Always-on rules (AGY)
-└── skills/
-    ├── solid-principles/SKILL.md
-    ├── clean-code/SKILL.md
-    ├── dry-kiss-yagni/SKILL.md
-    ├── design-patterns/SKILL.md
-    ├── architecture-principles/SKILL.md
-    ├── testing-principles/SKILL.md
-    └── clarify-before-build/SKILL.md
+├── plugin.json                     # Antigravity (AGY) plugin manifest
+├── package.json                    # npm / agentskills manifest
+├── AGENTS.md                       # Always-on rules for AI agents
+├── CLAUDE.md                       # Claude Code entry point
+├── .claude-plugin/                 # Claude Code marketplace & plugin manifests
+├── .agents/                        # Antigravity & Codex marketplace manifests
+├── .github/                        # Copilot CLI marketplace manifest
+├── .cursor-plugin/                 # Cursor plugin manifest
+├── .codex-plugin/                  # OpenAI Codex plugin manifest
+├── rules/                          # Always-on baseline rules
+└── skills/                         # 7 on-demand principle skills
 ```
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
-Skills follow the [agentskills.io specification](https://agentskills.io/specification).
+Skills follow the [agentskills.io specification](https://agentskills.io/specification). Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) (see [`CONTRIBUTING.md`](./CONTRIBUTING.md)).
 
-To add a new principle skill:
-1. Create `skills/<skill-name>/SKILL.md`
-2. Frontmatter: `name` + `description` (start with "Use when...")
-3. Keep it scannable — target < 500 words
-4. Include bad/good code examples
-5. Add a quick-reference table or self-check checklist
+## 📄 License
 
-## License
-
-MIT
+[MIT](./LICENSE)

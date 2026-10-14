@@ -1,0 +1,25 @@
+{
+  "name": "clean-principles",
+  "description": "Clean coding principles for AI agents: SOLID, Clean Code, DRY/KISS/YAGNI, Design Patterns, Architecture, Testing, and Clarify Before Build.",
+  "owner": {
+    "name": "Khuirul Huda",
+    "url": "https://github.com/Khuirul-Huda"
+  },
+  "plugins": [
+    {
+      "name": "clean-principles",
+      "description": "Clean coding principles for AI agents: SOLID, Clean Code, DRY/KISS/YAGNI, Design Patterns, Architecture, Testing, and Clarify Before Build.",
+      "source": "./",
+      "category": "development",
+      "tags": [
+        "clean-code",
+        "solid",
+        "design-patterns",
+        "architecture",
+        "testing",
+        "clarify-before-build"
+      ],
+      "skills": "skills/"
+    }
+  ]
+}

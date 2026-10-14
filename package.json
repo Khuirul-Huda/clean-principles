@@ -32,6 +32,7 @@
     ".claude-plugin/",
     ".cursor-plugin/",
     ".codex-plugin/",
+    ".agents/",
     "CLAUDE.md",
     "AGENTS.md",
     "README.md",
