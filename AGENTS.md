@@ -28,6 +28,17 @@ The following skills are available on-demand:
 - No flag arguments — use two named functions
 - No hidden side effects
 
+### File Sizing & Modularity
+- ≤ 300 lines per file (soft limit 200, hard limit 400) — split larger files into cohesive modules
+- Avoid generic junk-drawer files (`utils.ts`, `helpers.py`)
+
+### Human-Readable Code (Senior 10+ YoE Standard)
+- Write for humans first, compiler second — optimize for the engineer on-call at 2 AM
+- Guard clauses over nested `if/else` (max indentation level ≤ 2)
+- No clever one-liners or complex chained expressions
+- Self-documenting conditionals — encapsulate predicates into named booleans/functions
+- Command-Query Separation (CQS) — never mutate state inside getters/queries
+
 ### Code Quality
 - No magic numbers — use named constants
 - No commented-out code — delete it
@@ -46,4 +57,5 @@ The following skills are available on-demand:
 Ask yourself:
 1. Can I explain what each function does in one sentence?
 2. Would a new team member understand this without asking me?
-3. Is there any dead code, commented code, or `TODO` older than this PR?
+3. Is any file exceeding 300 lines or any function nested more than 2 levels deep?
+4. Is there any dead code, commented code, or `TODO` older than this PR?

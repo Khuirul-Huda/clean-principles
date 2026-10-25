@@ -53,7 +53,8 @@ Loaded dynamically when relevant to the task:
 
 | Dimension | ❌ Without Plugin (Default AI Behavior) | ✅ With `clean-principles` |
 |---|---|---|
-| **Class Architecture** | God classes mixing DB queries, external APIs, and business logic. | Strict **SRP** & **DIP**. Separates domain models, pure calculators, and infrastructure. |
+| **Class & File Sizing** | God classes & 800-line monolithic files mixing DB, UI, and business logic. | Strict **SRP** & **DIP**. Target **≤ 300 lines/file**; cohesive, single-purpose modules. |
+| **Readability & Control Flow** | Deeply nested `if/else` staircases (Arrow Anti-Pattern); dense clever one-liners. | **Senior 10+ YoE standard**: Guard clauses, flat indentation (≤ 2 levels), self-documenting code. |
 | **API Design** | Boolean flags (`process(True)`), cryptic parameter names (`u_id`, `flag`). | Eliminates flags via intention-revealing methods (`processStandard()`, `processPromotional()`). |
 | **Ambiguous Requests** | Speculative code expansion; outputs 1,400+ tokens of hybrid guesswork. | **Clarify before build**: Asks 1 spectrum question (~120 tokens), preventing rework. |
 | **Error Handling** | Swallows errors (`except: return None`) or returns mixed types. | Specific custom exceptions, fails fast, empty collections instead of `null`/`None`. |
