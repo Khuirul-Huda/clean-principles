@@ -30,6 +30,7 @@
     "rules/",
     "plugin.json",
     ".claude-plugin/",
+    ".cursor/",
     ".cursor-plugin/",
     ".codex-plugin/",
     ".agents/",
