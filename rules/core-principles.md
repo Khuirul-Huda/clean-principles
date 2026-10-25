@@ -48,10 +48,18 @@ These rules are always active. They form the baseline coding standards for every
 - **KISS**: Prefer the simple solution — complexity needs justification
 - **SRP**: Each class/module has one reason to change
 
+## Ecosystem Idioms & Conventions
+
+- **Adhere to the target language's idiomatic style** — write native-feeling code, never transplant alien paradigms (e.g., don't write Java-style classes in Go, or C-style loops in Python)
+- **Follow framework & community standards** — adhere to official best practices (PSR-12/Laravel conventions for PHP, PEP 8 for Python, Effective Go, React Rules of Hooks, Rust API Guidelines)
+- **Respect local toolchain configs** — read and comply with existing project linters and type configs (`tsconfig.json`, `phpstan.neon`, `.eslintrc`, `pyproject.toml`, `Cargo.toml`)
+- **Consistency over personal preference** — existing codebase conventions always win. Blend seamlessly with neighboring files
+
 ## Before Every Commit
 
 Ask yourself:
 1. Can I explain what each function does in one sentence?
 2. Would a new team member understand this without asking me?
-3. Is any file exceeding 300 lines or any function nested more than 2 levels deep?
-4. Is there any dead code, commented code, or `TODO` older than this PR?
+3. Does this code follow the idiomatic conventions and idioms of this language/framework?
+4. Is any file exceeding 300 lines or any function nested more than 2 levels deep?
+5. Is there any dead code, commented code, or `TODO` older than this PR?

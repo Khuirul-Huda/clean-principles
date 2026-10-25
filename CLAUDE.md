@@ -52,10 +52,17 @@ The following skills are available on-demand. Ask me to use them when relevant:
 - **KISS**: Prefer simple over clever
 - **SRP**: Each class/module has one reason to change
 
+### Ecosystem Idioms & Conventions
+- Adhere to the target language's idiomatic style — write native-feeling code, not transplanted paradigms
+- Follow framework & community standards (PSR-12/Laravel conventions, PEP 8, Effective Go, React Rules of Hooks)
+- Inspect local toolchain configs first (`tsconfig.json`, `phpstan.neon`, `.eslintrc`, `pyproject.toml`)
+- Consistency over personal preference — existing codebase conventions always win
+
 ## Before Every Commit
 
 Ask yourself:
 1. Can I explain what each function does in one sentence?
 2. Would a new team member understand this without asking me?
-3. Is any file exceeding 300 lines or any function nested more than 2 levels deep?
-4. Is there any dead code, commented code, or `TODO` older than this PR?
+3. Does this code follow the idiomatic conventions of this specific language and framework?
+4. Is any file exceeding 300 lines or any function nested more than 2 levels deep?
+5. Is there any dead code, commented code, or `TODO` older than this PR?

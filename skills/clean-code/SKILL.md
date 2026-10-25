@@ -284,6 +284,36 @@ def find_user(id: int) -> User:
 - Don't pass `null` as arguments
 - Catch specific exceptions, not bare `except`/`catch`
 
+## Ecosystem Idioms & Framework Conventions
+
+**"Write native-feeling code. Never transplant alien paradigms into a language that doesn't want them."**
+
+A senior engineer does not write Java in Python, C in Go, or procedural PHP in modern Laravel. Every ecosystem has community-tested patterns, conventions, and toolchains that must be respected.
+
+### 1. Language-Specific Idioms
+
+| Language | Anti-Pattern (Alien Paradigm) | Idiomatic Way (Native Paradigm) |
+|---|---|---|
+| **Python** | Index loops (`for i in range(len(arr)):`), Java getters/setters (`get_name()`) | Direct iteration (`for item in arr:` / `enumerate()`), `@property`, context managers (`with`). Follow PEP 8. |
+| **TypeScript / React** | In-place mutations (`user.status = 'ACTIVE'`), `any` types, ignoring hook deps | Immutability (`{ ...user, status: 'ACTIVE' }`), discriminated unions, strict null checks, Rules of Hooks. |
+| **Go** | Deep inheritance, panicking for flow control, stuttering names (`user.UserService`) | Small interfaces (1-2 methods), explicit error handling (`if err != nil`), concise naming (`user.Service`). |
+| **PHP / Laravel** | Raw DB queries in controllers, bypassing FormRequests, ignoring Eloquent | Eloquent relationships, FormRequest validation, API Resources, Service Container injection. Follow PSR-12. |
+| **Rust** | Overusing `.clone()` / `Rc<RefCell<T>>` to bypass borrow checker | Idiomatic borrowing (`&str`, `&[T]`), pattern matching, `Result`/`Option` combinators (`?`, `.map()`). |
+
+### 2. Framework & Tooling Inspection Protocol
+
+Before generating code in any project:
+1. **Inspect Toolchain Configs First:** Always check existing linter/formatter/compiler configs before writing a single line:
+   - `tsconfig.json` (path aliases like `@/*`, strict mode)
+   - `.eslintrc` / `biome.json` / `.prettierrc` (formatting, semi-colons, quotes)
+   - `phpstan.neon` / `pint.json` / `phpcs.xml` (PHP static analysis & style)
+   - `pyproject.toml` / `ruff.toml` / `setup.cfg` (Python tooling)
+2. **Follow the Neighbor Rule (Consistency Wins):**
+   - If existing files use kebab-case (`order-card.tsx`), do not introduce PascalCase (`OrderCard.tsx`).
+   - Match existing architecture: if the project uses Feature-Sliced Design or Hexagonal Architecture, follow that structure.
+3. **Use Framework-Native Primitives:**
+   - Don't write custom array utilities if the framework provides them (e.g., Laravel Collections `collect()`, native JS `Array.prototype` methods, Python `itertools`).
+
 ## Quick Self-Check
 
 Before committing, ask:
@@ -292,5 +322,6 @@ Before committing, ask:
 - [ ] Is each function doing exactly one thing?
 - [ ] Are all files under 300 lines of code?
 - [ ] Are there guard clauses instead of nested `if/else` (max nesting ≤ 2)?
+- [ ] Does the code follow idiomatic conventions of the specific language and framework?
 - [ ] Are all comments explaining *why*, not *what*?
 - [ ] Is there any commented-out code? (delete it)
