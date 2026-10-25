@@ -23,7 +23,7 @@
   "homepage": "https://github.com/Khuirul-Huda/clean-principles",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Khuirul-Huda/clean-principles.git"
+    "url": "git+https://github.com/Khuirul-Huda/clean-principles.git"
   },
   "files": [
     "skills/",
